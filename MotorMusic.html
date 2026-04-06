@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motor de Audio Volátil</title>
+    <style>
+        body { font-family: sans-serif; background: #1a1a1a; color: white; text-align: center; padding: 20px; }
+        .pantalla { background: #000; border: 2px solid #0f0; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
+        .lista-btn { display: flex; flex-direction: column; gap: 10px; }
+        button { padding: 15px; background: #333; color: white; border: 1px solid #555; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        button:active { background: #0f0; color: black; }
+        .btn-stop { background: #600; margin-top: 20px; width: 100%; }
+    </style>
+</head>
+<body>
+
+    <div class="pantalla">
+        <small>ESTADO DEL MOTOR</small>
+        <div id="status">Esperando Carga...</div>
+        <hr>
+        <div id="track-name">Selecciona una canción</div>
+    </div>
+
+    <div id="lista-canciones" class="lista-btn">
+        </div>
+
+    <button class="btn-stop" onclick="Motor.destruir()">DETENER Y LIMPIAR RAM</button>
+
+    <script>
+        const Motor = {
+            audio: null,
+            statusLabel: document.getElementById('status'),
+            trackLabel: document.getElementById('track-name'),
+
+            // 1. CARGAR LA LISTA DESDE EL JSON
+            async inicializar(urlJson) {
+                try {
+                    const res = await fetch(urlJson);
+                    const datos = await res.json();
+                    this.renderizar(datos);
+                    this.statusLabel.innerText = "Motor Listo";
+                } catch (e) {
+                    this.statusLabel.innerText = "Error cargando JSON";
+                }
+            },
+
+            // 2. CREAR BOTONES EN EL CELULAR
+            renderizar(canciones) {
+                const contenedor = document.getElementById('lista-canciones');
+                canciones.forEach(cancion => {
+                    const btn = document.createElement('button');
+                    btn.innerText = cancion.titulo;
+                    btn.onclick = () => this.reproducir(cancion.url, cancion.titulo);
+                    contenedor.appendChild(btn);
+                });
+            },
+
+            // 3. LOGICA VOLATIL (REPRODUCIR Y LIMPIAR)
+            reproducir(url, titulo) {
+                this.destruir(); // Limpiamos lo anterior para no saturar la RAM
+
+                this.audio = new Audio(url);
+                this.audio.play();
+                
+                this.statusLabel.innerText = "Reproduciendo...";
+                this.trackLabel.innerText = titulo;
+
+                this.audio.onended = () => this.destruir();
+            },
+
+            // 4. ELIMINAR RASTRO DE MEMORIA
+            destruir() {
+                if (this.audio) {
+                    this.audio.pause();
+                    this.audio.src = ""; // Cortamos el stream
+                    this.audio.load();
+                    this.audio = null; // Matamos el objeto
+                    this.statusLabel.innerText = "Memoria Liberada";
+                    this.trackLabel.innerText = "Sin música";
+                    console.log("RAM Limpia");
+                }
+            }
+        };
+
+        // REEMPLAZA ESTE LINK POR EL DE TU PROPIO JSON EN GITHUB (LINK RAW)
+        const MI_JSON_GITHUB = 'musica.json'; 
+        Motor.inicializar(MI_JSON_GITHUB);
+    </script>
+</body>
+</html>
