@@ -1,3 +1,4 @@
+
 [
   {
     "id": "01",
@@ -6,13 +7,12 @@
   },
   {
     "id": "02",
-    "titulo": "Subida desde mi Cel",
-    "url":"https://raw.githubusercontent.com/esclavala21-spec/72ubz8wj28bniqdonpitdu28s72b9qnalhoeu/6ccfe9eec473590786af494c16362d81df78a187/SALEM%20%20El%20tel%C3%B3n%20(Directo%20en%20Lab%20Ausa%2012_5_2023).m4a"  },
-
+    "titulo": "SALEM - El Telón",
+    "url": "https://raw.githubusercontent.com/esclavala21-spec/72ubz8wj28bniqdonpitdu28s72b9qnalhoeu/6ccfe9eec473590786af494c16362d81df78a187/SALEM%20%20El%20tel%C3%B3n%20(Directo%20en%20Lab%20Ausa%2012_5_2023).m4a"
+  },
   {
     "id": "03",
-    "titulo": "seg",
-    "url": "https://github.com/esclavala21-spec/72ubz8wj28bniqdonpitdu28s72b9qnalhoeu/blob/82253174653f2429b794f14318a1337e863893cd/Avenged%20Sevenfold%3B%20Buried%20Alive%20%20Traducci%C3%B3n%20%20Letra..m4a"
+    "titulo": "A7X - Buried Alive",
+    "url": "https://raw.githubusercontent.com/esclavala21-spec/72ubz8wj28bniqdonpitdu28s72b9qnalhoeu/main/Avenged%20Sevenfold%3B%20Buried%20Alive%20%20Traducci%C3%B3n%20%20Letra..m4a"
   }
-  
 ]
